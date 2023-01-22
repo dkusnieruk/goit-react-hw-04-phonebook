@@ -1,58 +1,66 @@
-import { Component } from 'react';
+import {useState, useEffect } from 'react';
 import ContactForm from './ContactForm/ContactForm';
 import Filter from './Filter/Filter';
 import { nanoid } from 'nanoid';
 import ContactList from './ContactList/ContactList';
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      contacts: [
-        { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-        { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-        { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-        { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-      ],
-      filter: '',
-    };
-  }
+function App () {
+  // constructor() {
+  //   super();
+  //   this.state = {
+  //     contacts: [
+  //       { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+  //       { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+  //       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+  //       w{ id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+  //     ],
+  //     filter: '',
+  //   };
+  // }
+        let [contacts, setContacts] = useState(
+          [
+                  { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+                  { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+                  { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+                  { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+                ]
+        )
+        
+       const [filter, setFilter] =useState('') 
+       const [name, setName] = useState()
+       const [number, setNumber] = useState()
 
-  handleRemove = id => {
-    const newList = this.state.contacts.filter(item => item.id !== id);
+  function handleRemove  (id) {
+    const newList = contacts.filter(item => item.id !== id);
 
-    this.setState(
-      {
-        contacts: newList,
-      },
-      this.updateStorage
-    );
+    setContacts(newList)
+    updateStorage()
+    // this.setState(
+    //   {
+    //     contacts: newList,
+    //   },
+    //   this.updateStorage
+    // );
   };
 
-  handleInputChange = (event) =>{
+  function handleInputChange  (event) {
     const {value} = event.target
-    this.setState({
-      filter:value
-    },
-    this.updateStorage)
+    setFilter(value)
   }
 
-  handleSubmit = event => {
+  function handleSubmit ( event ) {
     event.preventDefault();
+      setName(event.target.elements.name.value)
+      setNumber(event.target.elements.number.value)
     const object = {
       id: nanoid(),
-      name: event.target.elements.name.value,
-      number: event.target.elements.number.value,
+      name,
+      number,
     };
     
-    this.setState(
-      {
-      filter:""  
-      },
-      this.updateStorage
-    );
+    setFilter("")
 
-    const checkArray = this.state.contacts.filter(contact => {
+    const checkArray = contacts.filter(contact => {
       const filterArray = contact.name.toLowerCase();
       const filterName = object.name.toLowerCase();
 
@@ -63,50 +71,51 @@ class App extends Component {
 
     if (checkArray.length > 0) {
       alert(`Masz już kontakt o imieniu : ${object.name}`);
-    } else this.state.contacts.push(object);
+    } else contacts.push(object);
+    updateStorage()
       event.target.reset()
-  };
-  handleSearch = () => {
-    this.setState({
-      contacts: this.state.contacts,
-      filter: this.state.filter,
-    });
+    setFilter('')
+    
+    
   };
 
-  updateStorage() {
-    localStorage.setItem('state', JSON.stringify(this.state));
+  function handleSearch  ()  {
+    setContacts(contacts)
+    setFilter(filter)
+
+  };
+
+  useEffect(()=>{    
+    localStorage.setItem('contact', JSON.stringify(contacts))
+  }, [contacts])
+
+ 
+  function updateStorage() {
+    localStorage.setItem('contact', JSON.stringify(contacts));
+    
   }
-
-  componentDidMount() {
-    const state = localStorage.getItem('state');
-    if (state) this.setState(JSON.parse(state));
-  }
-
-  render() {
-    const { contacts, name, filter, number } = this.state;
-
     return (
       <>
         <ContactForm
           name={name}
           number={number}
-          onSubmit={this.handleSubmit}
+          onSubmit={handleSubmit}
         />
         <Filter
           contacts={contacts}
           filter={filter}
-          handleSearch={this.handleSearch}
-          handleChange={this.handleInputChange}
+          handleSearch={handleSearch}
+          handleChange={handleInputChange}
         />
         <ContactList
           contacts={contacts}
           filter={filter}
           name={name}
-          handleRemove={this.handleRemove}
+          handleRemove={handleRemove}
         />
       </>
     );
   }
-}
+
 
 export default App;
