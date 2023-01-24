@@ -1,22 +1,20 @@
-import { Component } from 'react';
 import css from '../ContactList/contactList.module.css';
 import propTypes from 'prop-types';
-class ContactItem extends Component {
-  render() {
-    return (
-      <li className={css.singleItem} key={this.props.contact.id}>
-        {this.props.contact.name}: {this.props.contact.number}
-        <button
-          className={css.removeButton}
-          type="button"
-          id={this.props.contact.id}
-          onClick={() => this.props.handleRemove(this.props.contact.id)}
-        >
-          X
-        </button>
-      </li>
-    );
-  }
+
+function ContactItem(props) {
+  return (
+    <li className={css.singleItem} key={props.contact.id}>
+      {props.contact.name}: {props.contact.number}
+      <button
+        className={css.removeButton}
+        type="button"
+        id={props.contact.id}
+        onClick={() => props.handleRemove(props.contact.id)}
+      >
+        X
+      </button>
+    </li>
+  );
 }
 
 ContactItem.propTypes = {
