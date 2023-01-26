@@ -12,8 +12,8 @@ function App () {
     { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
   ]);
 
-  const [filter, setFilter] = useState('');
-  
+  const [filter, setFilter] = useState(''); 
+  const [newContact, setNewContact] = useState({})
   const handleRemove = id => {
     const newList = contacts.filter(item => item.id !== id);
 
@@ -39,6 +39,27 @@ function App () {
     setFilter('')
   }, [contacts]);
 
+  const onSubmit=((event)=>{
+    event.preventDefault()
+ const checkArray = contacts.filter(contact => {
+      const filterArray = contact.name.toLowerCase();
+      const filterName = newContact.name.toLowerCase();
+
+      if (filterArray.includes(filterName)) {
+        return true;
+      } else return false;
+    });
+
+    if (checkArray.length>0) {
+      alert(`Masz już kontakt o imieniu : ${newContact.name}`);
+    } else  contacts.push(newContact);
+            setFilter('')
+            setContacts(contacts)
+            event.target.reset();
+        
+      })
+
+      
 
   return (
     <>
@@ -48,6 +69,8 @@ function App () {
       filter={filter}
       handleChange={handleInputChange}
       setFilter={setFilter}
+      onSubmit={onSubmit}
+      setNewContact={setNewContact}
            />
       <Filter
         contacts={contacts}

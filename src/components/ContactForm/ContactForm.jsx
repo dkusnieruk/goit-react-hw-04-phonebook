@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useEffect } from 'react';
 import {nanoid} from 'nanoid'
 import css from '../ContactForm/contactForm.module.css';
 import propTypes from 'prop-types';
@@ -6,37 +7,52 @@ import propTypes from 'prop-types';
 function ContactForm(props) {
   const [name, setName] =useState()
   const [number, setNumber] = useState()
+  
+  const newContact = {
+    id:nanoid(),
+    name:name,
+    number:number
+  }
+  
+  useEffect(()=>{
+    props.setNewContact(newContact)
+  })
+
+
 
   return (
     <>
-      <form className={css.form} onSubmit={((event)=>{
-        event.preventDefault()
-        const newContact = {
-          id : nanoid(),
-          name:name,
-          number:number
-        }
+      <form className={css.form}
+         onSubmit = {props.onSubmit}
+    //   onSubmit={((event)=>{
+    //     event.preventDefault()
+    //     const newContact = {
+    //       id : nanoid(),
+    //       name:name,
+    //       number:number
+    //     }
 
-    const checkArray = props.contacts.filter(contact => {
-      const filterArray = contact.name.toLowerCase();
-      const filterName = newContact.name.toLowerCase();
+    // const checkArray = props.contacts.filter(contact => {
+    //   const filterArray = contact.name.toLowerCase();
+    //   const filterName = newContact.name.toLowerCase();
 
-      if (filterArray.includes(filterName)) {
-        return true;
-      } else return false;
-    });
+    //   if (filterArray.includes(filterName)) {
+    //     return true;
+    //   } else return false;
+    // });
 
-    if (checkArray.length>0) {
-      alert(`Masz już kontakt o imieniu : ${newContact.name}`);
-    } else  props.contacts.push(newContact);
-            props.setFilter('')
-            props.setContacts(props.contacts)
-            event.target.reset();
-        console.log(newContact);
-        console.log(props.contacts);
-      })
+    // if (checkArray.length>0) {
+    //   alert(`Masz już kontakt o imieniu : ${newContact.name}`);
+    // } else  props.contacts.push(newContact);
+    //         props.setFilter('')
+    //         props.setContacts(props.contacts)
+    //         event.target.reset();
+    //     console.log(newContact);
+    //     console.log(props.contacts);
+    //   })
 
-      }>
+    //   }
+      >
         <label className={css.label}>
           Name
           <input
