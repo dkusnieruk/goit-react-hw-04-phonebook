@@ -14,6 +14,7 @@ function ContactForm(props) {
     number:number
   }
   
+
   useEffect(()=>{
     props.setNewContact(newContact)
   })
