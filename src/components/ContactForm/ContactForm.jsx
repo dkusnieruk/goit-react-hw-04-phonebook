@@ -1,29 +1,27 @@
 import { useState } from 'react';
-import {nanoid} from 'nanoid'
+import { nanoid } from 'nanoid';
 import css from '../ContactForm/contactForm.module.css';
 import propTypes from 'prop-types';
 
 function ContactForm(props) {
-  const [name, setName] =useState()
-  const [number, setNumber] = useState()
-  
-    const newContact = {
-    id:nanoid(),
-    name:name,
-    number:number
-  }
-  
+  const [name, setName] = useState();
+  const [number, setNumber] = useState();
+
+  const newContact = {
+    id: nanoid(),
+    name: name,
+    number: number,
+  };
+
   return (
     <>
-      <form className={css.form}
-         onSubmit = {props.onSubmit}
-      >
+      <form className={css.form} onSubmit={props.onSubmit}>
         <label className={css.label}>
           Name
           <input
-            onChange={((event)=>{
-              setName(event.target.value)
-            }) }
+            onChange={event => {
+              setName(event.target.value);
+            }}
             className={css.input}
             type="text"
             name="name"
@@ -36,9 +34,9 @@ function ContactForm(props) {
         <label className={css.label}>
           Number
           <input
-            onChange={((event)=>{
-              setNumber(event.target.value)
-            })}
+            onChange={event => {
+              setNumber(event.target.value);
+            }}
             className={css.input}
             type="tel"
             name="number"
@@ -48,12 +46,13 @@ function ContactForm(props) {
             required
           />
         </label>
-        <button 
-        className={css.button} 
-        type="submit"
-        onClick={()=>{
-          props.setNewContact(newContact) 
-        }}>
+        <button
+          className={css.button}
+          type="submit"
+          onClick={() => {
+            props.setNewContact(newContact);
+          }}
+        >
           Add Contact
         </button>
       </form>

@@ -19,7 +19,6 @@ function Filter(props) {
 }
 
 Filter.propTypes = {
-
   filter: propTypes.string,
 };
 

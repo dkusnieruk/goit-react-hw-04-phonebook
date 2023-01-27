@@ -3,17 +3,12 @@ import ContactForm from './ContactForm/ContactForm';
 import Filter from './Filter/Filter';
 import ContactList from './ContactList/ContactList';
 
-function App () {
-  let [contacts, setContacts] = useState([
-    { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-    { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-    { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-    { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-  ]);
+function App() {
+  const getStorage = localStorage.getItem('contact');
+  let [contacts, setContacts] = useState(JSON.parse(getStorage));
 
-
-  const [filter, setFilter] = useState(''); 
-  const [newContact, setNewContact] = useState()
+  const [filter, setFilter] = useState('');
+  const [newContact, setNewContact] = useState();
   const handleRemove = id => {
     const newList = contacts.filter(item => item.id !== id);
 
@@ -23,21 +18,19 @@ function App () {
   const handleInputChange = event => {
     const { value } = event.target;
     setFilter(value);
-
   };
-
 
   const handleSearch = () => {
     setFilter(filter);
   };
 
   useEffect(() => {
-  localStorage.setItem(`contact`, JSON.stringify(contacts))
+    localStorage.setItem(`contact`, JSON.stringify(contacts));
   }, [contacts, newContact]);
 
-  const onSubmit=((event)=>{
-    event.preventDefault()
- const checkArray = contacts.filter(contact => {
+  const onSubmit = event => {
+    event.preventDefault();
+    const checkArray = contacts.filter(contact => {
       const filterArray = contact.name.toLowerCase();
       const filterName = newContact.name.toLowerCase();
 
@@ -46,27 +39,23 @@ function App () {
       } else return false;
     });
 
-    if (checkArray.length>0) {
+    if (checkArray.length > 0) {
       alert(`Masz już kontakt o imieniu : ${newContact.name}`);
-    } else  
-            setContacts([...contacts, newContact])
-            event.target.reset();
-        
-      })
-
-      
+    } else setContacts([...contacts, newContact]);
+    event.target.reset();
+  };
 
   return (
     <>
-      <ContactForm 
-      contacts={contacts}
-      setContacts={setContacts}
-      filter={filter}
-      handleChange={handleInputChange}
-      setFilter={setFilter}
-      onSubmit={onSubmit}
-      setNewContact={setNewContact}
-           />
+      <ContactForm
+        contacts={contacts}
+        setContacts={setContacts}
+        filter={filter}
+        handleChange={handleInputChange}
+        setFilter={setFilter}
+        onSubmit={onSubmit}
+        setNewContact={setNewContact}
+      />
       <Filter
         contacts={contacts}
         filter={filter}
