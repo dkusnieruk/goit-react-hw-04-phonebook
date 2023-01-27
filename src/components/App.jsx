@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import ContactForm from './ContactForm/ContactForm';
 import Filter from './Filter/Filter';
-import { nanoid } from 'nanoid';
 import ContactList from './ContactList/ContactList';
 
 function App () {
@@ -12,13 +11,13 @@ function App () {
     { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
   ]);
 
+
   const [filter, setFilter] = useState(''); 
-  const [newContact, setNewContact] = useState({})
+  const [newContact, setNewContact] = useState()
   const handleRemove = id => {
     const newList = contacts.filter(item => item.id !== id);
 
     setContacts(newList);
-    // updateStorage()
   };
 
   const handleInputChange = event => {
@@ -29,15 +28,12 @@ function App () {
 
 
   const handleSearch = () => {
-    setContacts(contacts);
     setFilter(filter);
   };
 
   useEffect(() => {
-    localStorage.setItem('contact', JSON.stringify(contacts));
-    setContacts(contacts)
-    setFilter('')
-  }, [contacts]);
+  localStorage.setItem(`contact`, JSON.stringify(contacts))
+  }, [contacts, newContact]);
 
   const onSubmit=((event)=>{
     event.preventDefault()
@@ -52,9 +48,8 @@ function App () {
 
     if (checkArray.length>0) {
       alert(`Masz już kontakt o imieniu : ${newContact.name}`);
-    } else  contacts.push(newContact);
-            setFilter('')
-            setContacts(contacts)
+    } else  
+            setContacts([...contacts, newContact])
             event.target.reset();
         
       })
