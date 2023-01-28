@@ -61,8 +61,6 @@ function ContactForm(props) {
 }
 
 ContactForm.propTypes = {
-  name: propTypes.string,
-  number: propTypes.string,
   onChange: propTypes.func,
   onSubmit: propTypes.func,
 };
