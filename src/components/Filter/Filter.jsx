@@ -1,7 +1,7 @@
 import css from '../Filter/filter.module.css';
 import propTypes from 'prop-types';
 
-function Filter({filter, handleChange}) {
+function Filter({ filter, handleChange }) {
   return (
     <>
       <label className={css.label}>

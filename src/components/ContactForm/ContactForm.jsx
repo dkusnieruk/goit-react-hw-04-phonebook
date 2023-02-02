@@ -1,21 +1,20 @@
 import { useState } from 'react';
-import { nanoid } from 'nanoid';
 import css from '../ContactForm/contactForm.module.css';
 import propTypes from 'prop-types';
 
-function ContactForm({onSubmit,setNewContact, kicker}) {
+function ContactForm({ onSubmit }) {
   const [name, setName] = useState();
   const [number, setNumber] = useState();
 
-  const newContact = {
-    id: nanoid(),
-    name: name,
-    number: number,
+  const handleSubmit = event => {
+    event.preventDefault();
+    onSubmit(name, number);
+    event.target.reset();
   };
 
   return (
     <>
-      <form className={css.form} onSubmit={onSubmit}>
+      <form className={css.form} onSubmit={handleSubmit}>
         <label className={css.label}>
           Name
           <input
@@ -46,13 +45,7 @@ function ContactForm({onSubmit,setNewContact, kicker}) {
             required
           />
         </label>
-        <button
-          className={css.button}
-          type="submit"
-          onClick={() => {
-            setNewContact(newContact);
-          }}
-        >
+        <button className={css.button} type="submit">
           Add Contact
         </button>
       </form>

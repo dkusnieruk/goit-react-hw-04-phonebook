@@ -1,7 +1,7 @@
 import css from '../ContactList/contactList.module.css';
 import propTypes from 'prop-types';
 
-function ContactItem({contact, handleRemove}) {
+function ContactItem({ contact, handleRemove }) {
   return (
     <li className={css.singleItem} key={contact.id}>
       {contact.name}: {contact.number}

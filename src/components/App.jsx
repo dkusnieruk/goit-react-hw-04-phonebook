@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { nanoid } from 'nanoid';
 import ContactForm from './ContactForm/ContactForm';
 import Filter from './Filter/Filter';
 import ContactList from './ContactList/ContactList';
@@ -7,7 +8,6 @@ function App() {
   const getStorage = localStorage.getItem('contact');
   let [contacts, setContacts] = useState(JSON.parse(getStorage));
   const [filter, setFilter] = useState('');
-  const [newContact, setNewContact] = useState();
   const handleRemove = id => {
     const newList = contacts.filter(item => item.id !== id);
     setContacts(newList);
@@ -24,10 +24,14 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem(`contact`, JSON.stringify(contacts));
-  }, [contacts, newContact]);
+  }, [contacts]);
 
-  const onSubmit = event => {
-    event.preventDefault();
+  const onSubmit = (name, number) => {
+    const newContact = {
+      id: nanoid(),
+      name: name,
+      number: number,
+    };
     const checkArray = contacts.filter(contact => {
       const filterArray = contact.name.toLowerCase();
       const filterName = newContact.name.toLowerCase();
@@ -40,7 +44,6 @@ function App() {
     if (checkArray.length > 0) {
       alert(`Masz już kontakt o imieniu : ${newContact.name}`);
     } else setContacts([...contacts, newContact]);
-    event.target.reset();
   };
   return (
     <>
@@ -51,7 +54,7 @@ function App() {
         handleChange={handleInputChange}
         setFilter={setFilter}
         onSubmit={onSubmit}
-        setNewContact={setNewContact}
+        // setNewContact={setNewContact}
       />
       <Filter
         contacts={contacts}
