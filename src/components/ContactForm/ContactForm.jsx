@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid';
 import css from '../ContactForm/contactForm.module.css';
 import propTypes from 'prop-types';
 
-function ContactForm(props) {
+function ContactForm({onSubmit,setNewContact, kicker}) {
   const [name, setName] = useState();
   const [number, setNumber] = useState();
 
@@ -15,7 +15,7 @@ function ContactForm(props) {
 
   return (
     <>
-      <form className={css.form} onSubmit={props.onSubmit}>
+      <form className={css.form} onSubmit={onSubmit}>
         <label className={css.label}>
           Name
           <input
@@ -50,7 +50,7 @@ function ContactForm(props) {
           className={css.button}
           type="submit"
           onClick={() => {
-            props.setNewContact(newContact);
+            setNewContact(newContact);
           }}
         >
           Add Contact

@@ -1,7 +1,7 @@
 import css from '../Filter/filter.module.css';
 import propTypes from 'prop-types';
 
-function Filter(props) {
+function Filter({filter, handleChange}) {
   return (
     <>
       <label className={css.label}>
@@ -10,8 +10,8 @@ function Filter(props) {
           className={css.input}
           type="search"
           name="filter"
-          value={props.filter}
-          onChange={props.handleChange}
+          value={filter}
+          onChange={handleChange}
         ></input>
       </label>
     </>

@@ -6,12 +6,10 @@ import ContactList from './ContactList/ContactList';
 function App() {
   const getStorage = localStorage.getItem('contact');
   let [contacts, setContacts] = useState(JSON.parse(getStorage));
-
   const [filter, setFilter] = useState('');
   const [newContact, setNewContact] = useState();
   const handleRemove = id => {
     const newList = contacts.filter(item => item.id !== id);
-
     setContacts(newList);
   };
 
@@ -44,7 +42,6 @@ function App() {
     } else setContacts([...contacts, newContact]);
     event.target.reset();
   };
-
   return (
     <>
       <ContactForm

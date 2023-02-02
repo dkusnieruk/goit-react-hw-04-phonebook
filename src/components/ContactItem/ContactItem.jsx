@@ -1,15 +1,15 @@
 import css from '../ContactList/contactList.module.css';
 import propTypes from 'prop-types';
 
-function ContactItem(props) {
+function ContactItem({contact, handleRemove}) {
   return (
-    <li className={css.singleItem} key={props.contact.id}>
-      {props.contact.name}: {props.contact.number}
+    <li className={css.singleItem} key={contact.id}>
+      {contact.name}: {contact.number}
       <button
         className={css.removeButton}
         type="button"
-        id={props.contact.id}
-        onClick={() => props.handleRemove(props.contact.id)}
+        id={contact.id}
+        onClick={() => handleRemove(contact.id)}
       >
         X
       </button>
