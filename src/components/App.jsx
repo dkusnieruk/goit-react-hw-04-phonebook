@@ -50,11 +50,7 @@ function App() {
       <ContactForm
         contacts={contacts}
         setContacts={setContacts}
-        filter={filter}
-        handleChange={handleInputChange}
-        setFilter={setFilter}
         onSubmit={onSubmit}
-        // setNewContact={setNewContact}
       />
       <Filter
         contacts={contacts}
